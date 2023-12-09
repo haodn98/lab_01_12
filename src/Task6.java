@@ -1,4 +1,7 @@
+
 import java.io.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.*;
 
 class ThreeNumsException extends Exception {
@@ -15,7 +18,13 @@ public class Task6 {
     }
 
     public static void myBank() {
-        try (BufferedReader br = new BufferedReader(new FileReader("plewibnra.txt"))) {
+        URL url;
+        try {
+            url = new URL("https://ewib.nbp.pl/plewibnra?dokNazwa=plewibnra.txt");
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()))) {
             System.out.println("Please enter your number(3-digits integer): ");
             Scanner sc = new Scanner(System.in);
             int number = sc.nextInt();
@@ -38,6 +47,7 @@ public class Task6 {
         } catch (IOException | ThreeNumsException e) {
             System.out.println(e);
         }
+
 
     }
 }
